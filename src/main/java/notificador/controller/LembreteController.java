@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 @CrossOrigin(origins = "*")
 public class LembreteController {
 
-	@PostMapping("/api/task")
+	@PostMapping("/task")
 	public ResponseEntity<String> criarTask(@RequestBody Map<String, Object> data) {
 
 	    System.out.println("🌐 Task recebida:");
@@ -36,18 +36,17 @@ public class LembreteController {
 	    return ResponseEntity.ok("Task recebida e enviada ao WhatsApp");
 	}
 
-	public void enviarWhatsApp(String phone, String message) {
+	public void enviarWhatsApp(String title, String priority) {
 
-	    String url = "https://api.z-api.io/3F20855B43F1D1DA89CB9A962EE6827F/token/AE1078FF9A133EE7F416D99A/send-text";
-
+	    String url = "https://api.z-api.io/instances/SEU_INSTANCE/token/SEU_TOKEN/send-text";
 
 	    Map<String, Object> body = new HashMap<>();
-	    body.put("phone", phone);
-	    body.put("message", message);
+	    body.put("phone", "5511999999999");
+	    body.put("message", "📝 Nova tarefa: " + title + " | Prioridade: " + priority);
 
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    headers.set("Client-Token", "F396f2b9b7de742aaa37650dd2456f497S");
+	    headers.set("Client-Token", "SEU_CLIENT_TOKEN");
 
 	    HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
