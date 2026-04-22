@@ -40,7 +40,6 @@ public class LembreteController {
 
 	    String url = "https://api.z-api.io/3F20855B43F1D1DA89CB9A962EE6827F/token/AE1078FF9A133EE7F416D99A/send-text";
 
-	    RestTemplate restTemplate = new RestTemplate();
 
 	    Map<String, Object> body = new HashMap<>();
 	    body.put("phone", phone);
@@ -48,9 +47,11 @@ public class LembreteController {
 
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    headers.set("Client-Token", "F396f2b9b7de742aaa37650dd2456f497S");
 
 	    HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
+	    RestTemplate restTemplate = new RestTemplate();
 	    restTemplate.postForObject(url, request, String.class);
 	}
 }
