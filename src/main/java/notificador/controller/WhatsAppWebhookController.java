@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/webhook")
 public class WhatsAppWebhookController {
 
-    @PostMapping("/whatsapp")
-    public ResponseEntity<String> receberMensagem(@RequestBody String payload) {
+	@PostMapping("/webhook/whatsapp")
+	public ResponseEntity<String> receber(@RequestBody String payload) {
 
-        System.out.println("🔥 Mensagem recebida da Z-API:");
-        System.out.println(payload);
+	    System.out.println("\n🔥 ===== NOVA MENSAGEM =====");
+	    System.out.println(payload);
+	    System.out.println("================================\n");
 
-        return ResponseEntity.ok("OK");
-    }
+	    return ResponseEntity.ok("OK");
+	}
 }
