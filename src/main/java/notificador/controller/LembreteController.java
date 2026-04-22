@@ -42,7 +42,7 @@ public class LembreteController {
 	    String url = "https://api.z-api.io/instances/3F20855B43F1D1DA89CB9A962EE6827F/token/AE1078FF9A133EE7F416D99A/send-text";
 
 	    Map<String, Object> body = new HashMap<>();
-	    body.put("phone", "5511999999999");
+	    body.put("phone", "5519999273962");
 	    body.put("message", "📝 Nova tarefa: " + title + " | Prioridade: " + priority);
 
 	    HttpHeaders headers = new HttpHeaders();
