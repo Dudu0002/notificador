@@ -1,23 +1,57 @@
 package notificador.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class LembreteController {
 
-    @PostMapping("/task")
-    public ResponseEntity<String> criarTask(@RequestBody String payload) {
+	@PostMapping("/api/task")
+	public ResponseEntity<String> criarTask(@RequestBody Map<String, Object> data) {
 
-        System.out.println("🌐 TASK do site Mind-Tasker:");
-        System.out.println(payload);
+	    System.out.println("🌐 Task recebida:");
+	    System.out.println(data);
 
-        return ResponseEntity.ok("Task recebida");
-    }
+	    String title = (String) data.get("title");
+
+
+	    enviarWhatsApp(
+	        "5519999273962",
+	        "📝 Nova tarefa criada: " + title
+	    );
+
+	    return ResponseEntity.ok("Task recebida e enviada ao WhatsApp");
+	}
+
+	public void enviarWhatsApp(String phone, String message) {
+
+	    String url = "https://api.z-api.io/3F20855B43F1D1DA89CB9A962EE6827F/token/AE1078FF9A133EE7F416D99A/send-text";
+
+	    RestTemplate restTemplate = new RestTemplate();
+
+	    Map<String, Object> body = new HashMap<>();
+	    body.put("phone", phone);
+	    body.put("message", message);
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+
+	    HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+
+	    restTemplate.postForObject(url, request, String.class);
+	}
 }
+
